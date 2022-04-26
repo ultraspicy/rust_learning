@@ -19,14 +19,6 @@ pub fn order_candy() {
     println!("order_candy called");
 }
 
-mod serving {
-    fn take_order() {}
-
-    fn serve_order() {}
-
-    fn take_payment() {}
-}
-
 ///  we make the struct public, but the struct’s fields will still be private.
 ///  pub struct Breakfast {
 ///         pub toast: String,
@@ -38,3 +30,10 @@ mod serving {
 ///        Soup,
 ///        Salad,
 ///     }
+mod serving {
+    fn take_order() {}
+
+    fn serve_order() {}
+
+    fn take_payment() {}
+}
