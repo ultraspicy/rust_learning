@@ -11,7 +11,7 @@ fn main() {
     /// A tuple is a general way of grouping together a number of values with a variety of types into one compound type
     let tup: (i32, f64, u8) = (500, 6.4, 1);
     let (x, y, z) = tup;
-    let five_hundred = x.0;
+    let five_hundred = tup.0;
 
     /// array in Rust have a fixed length.
     let a = [1, 2, 3, 4, 5];
@@ -77,10 +77,8 @@ fn main() {
     /// catch-all pattern
     let dice_roll = 9;
     match dice_roll {
-        3 => add_fancy_hat(),
-        7 => remove_fancy_hat(),
-        /// last pattern will match all values not specifically listed
+        3 => println!("hit {}", dice_roll),
+        7 => println!("hit hit {}", dice_roll),
         other => println!("go to the other arm, {:?},", other),
-        /// use `_ => reroll(),` if you don't want to use this value
     }
 }
