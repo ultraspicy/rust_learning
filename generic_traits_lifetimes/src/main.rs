@@ -1,4 +1,5 @@
-use num;
+use std::fmt::Display;
+use num_traits;
 
 fn main() {
     let num_list = vec![1, 2, 3];
@@ -46,18 +47,48 @@ pub trait Distance {
     }
 }
 
-impl<T: num::Integer + std::ops::Mul<Output = &T>, U: num::Float> Distance for Point<T, U> {
+impl<T: num_traits::FromPrimitive + Display, U: num_traits::FromPrimitive> Distance for Point<T, U> {
     fn distance(&self) -> f32 {
         &self.x * &self.x + &self.y * &self.y
     }
 }
-// fn largest_generic<T>(list: &[T]) -> T {
-//     let mut ret = list[0];
-//
-//     for &item in list {
-//         if item > ret {
-//             ret = item;
-//         }
-//     }
-//     ret
-// }
+
+// &i32  a reference
+// &'a i32  a reference with an explicit lifetime annotation
+// &'a mut i32  a mutable reference with an explicit lifetime annotation
+
+// lifetime in function signature
+// 1. we’re not changing the lifetimes of any values passed in or returned.
+// Rather, we’re specifying that the borrow checker should reject
+// any values that don’t adhere to these constraints
+// 2 .returning a reference from a function, the lifetime parameter for the return type
+// needs to match the lifetime parameter for one of the parameters.
+fn longer<'a> (s1: &'a str, s2: &'a str) -> &'a str {
+    if s1.len() > s2.len() {
+        s1
+    } else {
+        s2
+    }
+}
+// lifetime in struct
+// it means an instance of Something can’t outlive the reference it holds in its part field.
+struct Something<'a> {
+    part: &'a str,
+}
+// interesting lifetime elision rule, which makes the method much nicer to review and write
+
+// the lifetime of all string literals is 'static., living for the entire duration of the program
+
+// put generics, trait bounds and lifetime together
+fn longer_refined<'a, T> (
+    s1: &'a str,
+    s2: &'a str,
+    announce: T
+) -> &'a str where T:Display {
+    println!("announce {}", announce);
+    if s1.len() > s2.len() {
+        s1
+    } else {
+        s2
+    }
+}
