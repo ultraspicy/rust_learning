@@ -38,8 +38,9 @@ impl<T, U> Point<T, U> {
     }
 }
 
-/// trait tells the Rust compiler about functionality a particular type has
-/// define & implementing
+// trait tells the Rust compiler about functionality a particular type has
+// defining & implementing a trait
+// we can implement a trait on a type only if at least one of the trait or the type is local to our crate
 pub trait Distance {
     fn distance(&self) -> f32 {
         // this is a default implementation
@@ -47,7 +48,9 @@ pub trait Distance {
     }
 }
 
-impl<T: num_traits::FromPrimitive + Display, U: num_traits::FromPrimitive> Distance for Point<T, U> {
+impl<'a, T: num_traits::FromPrimitive + std::ops::Mul<Output = &'a T>,
+    U: num_traits::FromPrimitive
+> Distance for Point<T, U> {
     fn distance(&self) -> f32 {
         &self.x * &self.x + &self.y * &self.y
     }
