@@ -1,5 +1,13 @@
 fn main() {
 
+    /// Quiz
+    ///     1. What is move
+    ///     2. What is the difference between value copy vs. clone. Why Copy trait and Drop trait are mutually exclusive
+    ///     3. What is the implication of function arguments passing and returning
+    ///     4. How to use value without transferring ownership
+    ///     5. What's the limitation of mutable reference
+    ///     6. What's the scope of a reference
+
     /// Heap memory must be requested from the memory allocator at runtime.
     let mut s = String::from("hello");
     s.push_str(", world");
@@ -45,8 +53,8 @@ fn main() {
 
     let s = String::from("hello");
 
-    /// let mut s = String::from("hello world"); s is an immutable reference
-    /// let word = first_word(&s);
+    /// let mut s = String::from("hello world");
+    /// let word = first_word(&s); immutable reference
     /// s.clear() uses a mutable reference
     /// println!("the first word is: {}", word); error occurs, no mutable reference and immutable one at the same time
 
@@ -60,6 +68,13 @@ fn main() {
     // Because string literals *are* String slices already,
     // this works too, without the slice syntax!
     let word = first_word(my_string_literal);
+
+    println!(" ------ test the reference lifetime------");
+    let mut s = String::from("hello world");
+    let word = first_word(&s);
+    println!("the first word is: {}", word);
+    // s.clear(); this will cause error
+    println!("the first word is: {}", word);
 }
 
 // Defining a function to take a string slice instead of a reference to a String makes our API more general
