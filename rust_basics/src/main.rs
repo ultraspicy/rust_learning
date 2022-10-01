@@ -2,6 +2,12 @@ use std::net::IpAddr;
 
 fn main() {
 
+/// Quiz:
+///  1. given variable are immutable by default, what is the difference between a variable and a constant
+///  2. what is shadowing
+///  3. how to do type annotation
+///  4. what is the difference between a statement and an expression (Expressions do not include ending semicolons!!!)
+
 /// Rust is a statically typed language
 /// Scalar Types - integers, floating-point, booleans, characters
 ///     Integers - Decimal 98_222, Hex 0xff, Binary 0b1111_0000, Byte b'A'
