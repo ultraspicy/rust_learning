@@ -63,27 +63,17 @@ impl<T: Float> Distance<T> for Point<T> {
     }
 }
 
-// // we can implement a trait on a type only if at least one of the trait or the type is local to our crate
 
-//
-// impl<'a, T: num_traits::FromPrimitive + std::ops::Mul<Output = &'a T>,
-//     U: num_traits::FromPrimitive
-// > Distance for Point<T, U> {
-//     fn distance(&self) -> f32 {
-//         &self.x * &self.x + &self.y * &self.y
-//     }
-// }
-//
-// // &i32  a reference
-// // &'a i32  a reference with an explicit lifetime annotation
-// // &'a mut i32  a mutable reference with an explicit lifetime annotation
-//
-// // lifetime in function signature
-// // 1. we’re not changing the lifetimes of any values passed in or returned.
-// // Rather, we’re specifying that the borrow checker should reject
-// // any values that don’t adhere to these constraints
-// // 2 .returning a reference from a function, the lifetime parameter for the return type
-// // needs to match the lifetime parameter for one of the parameters.
+// &i32  a reference
+// &'a i32  a reference with an explicit lifetime annotation
+// &'a mut i32  a mutable reference with an explicit lifetime annotation
+
+// lifetime in function signature
+// 1. we’re not changing the lifetimes of any values passed in or returned.
+// Rather, we’re specifying that the borrow checker should reject
+// any values that don’t adhere to these constraints
+// 2 .returning a reference from a function, the lifetime parameter for the return type
+// needs to match the lifetime parameter for one of the parameters.
 // fn longer<'a> (s1: &'a str, s2: &'a str) -> &'a str {
 //     if s1.len() > s2.len() {
 //         s1
@@ -91,8 +81,8 @@ impl<T: Float> Distance<T> for Point<T> {
 //         s2
 //     }
 // }
-// // lifetime in struct
-// // it means an instance of Something can’t outlive the reference it holds in its part field.
+// lifetime in struct
+// it means an instance of Something can’t outlive the reference it holds in its part field.
 // struct Something<'a> {
 //     part: &'a str,
 // }
@@ -112,4 +102,4 @@ impl<T: Float> Distance<T> for Point<T> {
 //     } else {
 //         s2
 //     }
-//}
+// }

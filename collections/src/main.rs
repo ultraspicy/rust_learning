@@ -8,7 +8,7 @@ fn main() {
     /// read its value
     let third: &i32 = &v[2];
     /// !!! cause the program to panic
-    ///let does_not_exist = &v[100];
+    /// let does_not_exist = &v[100];
     /// it returns None without panicking
     let does_not_exist = v.get(100);
 

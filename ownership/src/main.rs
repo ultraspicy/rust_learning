@@ -7,12 +7,18 @@ fn main() {
     ///     4. How to use value without transferring ownership
     ///     5. What's the limitation of mutable reference
     ///     6. What's the scope of a reference
+    ///     7. Heap v.s. stack, what is allocating on the heap
 
     /// Heap memory must be requested from the memory allocator at runtime.
     let mut s = String::from("hello");
     s.push_str(", world");
 
     println!("{}", s);
+
+    /// What is a move? Create a shallow copy and also invalidate the first variable
+    /// Clone trait: get a 'deep copy' of the heap data as well.
+    /// Copy trait: if a type implements the Copy trait, variables that use it do not move but rather are trivially copied, making them still valid after assignment to another variable.
+    /// Drop trait: if a type implements the Copy trait, variables will be recycled when go out of scope
 
     ///     let s1 = String::from("hello");
     ///     let s2 = s1;
@@ -57,6 +63,8 @@ fn main() {
     /// let word = first_word(&s); immutable reference
     /// s.clear() uses a mutable reference
     /// println!("the first word is: {}", word); error occurs, no mutable reference and immutable one at the same time
+    /// Q: what is String and what is &str
+    /// A: String is a type that will always be allocated on heap, while &str stands for string slice
 
     let my_string = String::from("hello world");
     // `first_word` works on slices of `String`s, whether partial or whole
