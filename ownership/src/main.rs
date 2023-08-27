@@ -15,7 +15,7 @@ fn main() {
 
     println!("{}", s);
 
-    /// What is a move? Create a shallow copy and also invalidate the first variable
+    /// What is a move? move the ownership of the heap data \n
     /// Clone trait: get a 'deep copy' of the heap data as well.
     /// Copy trait: if a type implements the Copy trait, variables that use it do not move but rather are trivially copied, making them still valid after assignment to another variable.
     /// Drop trait: if a type implements the Copy trait, variables will be recycled when go out of scope
@@ -39,10 +39,9 @@ fn main() {
     ///     let s = String::from("hello");   s comes into scope
     ///     takes_ownership(s);              s's value moves into the function and so is no longer valid
     /// Returning values can also transfer ownership
-    /// use reference to avoid move (making variable invalid after assigning)
-    ///  reference and borrowing - We call the action of creating a reference borrowing
+    /// use reference to avoid move
+    ///  reference(non-owning pointers) and borrowing - We call the action of creating a reference borrowing
     /// which allow using a value without transferring ownership
-
     let len = calculate_length(&s1);
     println!("The length of '{}' is {}.", s1, len);
 
@@ -52,7 +51,7 @@ fn main() {
     ///    let r1 = &mut s;
     ///    let r2 = &mut s;
     ///    println!("{}, {}", r1, r2); -> two mutable reference
-    /// we cannot have a mutable reference while we have an immutable one to the same value
+    /// we cannot have a mutable reference while we have an immutable one to the same value, cuz it may lead to deref a deallocated memory
     let mut s = String::from("hello");
     change_something(&mut s);
     println!("{}", s);
@@ -83,6 +82,7 @@ fn main() {
     println!("the first word is: {}", word);
     // s.clear(); this will cause error
     println!("the first word is: {}", word);
+    println!("{x}")
 }
 
 // Defining a function to take a string slice instead of a reference to a String makes our API more general

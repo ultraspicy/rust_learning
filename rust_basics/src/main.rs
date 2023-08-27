@@ -87,4 +87,7 @@ fn main() {
         7 => println!("hit hit {}", dice_roll),
         other => println!("go to the other arm, {:?},", other),
     }
+
+    println!("{TWO}");
 }
+const TWO: u32 = 1 + 1;
