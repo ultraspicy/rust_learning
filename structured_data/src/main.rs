@@ -1,4 +1,4 @@
-/// Quiz
+/// Quiz this chapter is mostly about remembering the syntax
 ///     1. how to define a struct and how to use a struct
 ///     2. how to use specific value from struct
 ///     3. how to define a function with params and return values
@@ -41,6 +41,12 @@ fn main() {
 
     // Statements are instructions that perform some action and do not return a value.
     // Expressions evaluate to a resultant value. Let’s look at some examples.
+
+    // struct update syntax
+    let user2 = User {
+        email: String::from("another@example.com"),
+        ..user1
+    };
 }
 
 fn simple_add (x: i32, y: i32) -> i32 {
