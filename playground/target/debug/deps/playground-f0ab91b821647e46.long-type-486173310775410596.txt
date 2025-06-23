@@ -1,0 +1,1 @@
+std::iter::Take<FlatMap<SplitWhitespace<'_>, Flatten<std::option::IntoIter<std::iter::Chain<ToUppercase, Chars<'_>>>>, {closure@src/main.rs:11:24: 11:30}>>
