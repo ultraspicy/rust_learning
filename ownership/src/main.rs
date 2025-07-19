@@ -81,9 +81,13 @@ fn main() {
     let mut s = String::from("hello world");
     let word = first_word(&s);
     println!("the first word is: {}", word);
-    // s.clear(); this will cause error
-    println!("the first word is: {}", word);
-    println!("{x}")
+    // s.clear() will make word point to a freed mmr. it is ok to 
+    // clear() this mmr, but if `println!("the first word is: {}", word);` 
+    // after s.clear();, it will run into err since s.clear(); is a mutable borrow
+    // we cannot have a mutable borrow after immutable borrow
+    s.clear(); // clear() needs to mutably borrow `s` to modify it
+    //println!("the first word is: {}", word);
+
 }
 
 // Defining a function to take a string slice instead of a reference to a String makes our API more general
