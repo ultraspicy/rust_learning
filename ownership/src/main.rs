@@ -58,12 +58,13 @@ fn main() {
 
     let s = String::from("hello");
 
-    /// let mut s = String::from("hello world");
-    /// let word = first_word(&s); immutable reference
-    /// s.clear() uses a mutable reference
-    /// println!("the first word is: {}", word); error occurs, no mutable reference and immutable one at the same time
-    /// Q: what is String and what is &str
-    /// A: String is a type that will always be allocated on heap, while &str stands for string slice
+    // let mut s = String::from("hello world");
+    // let word = first_word(&s); immutable reference
+    // s.clear() uses a mutable reference
+    // println!("the first word is: {}", word); error occurs, no mutable reference and immutable one at the same time
+    // Q: what is String and what is &str
+    // A: String is a type that will always be allocated on heap
+    // while &str stands for string slice, a "fat" pointer with a `len` field
 
     let my_string = String::from("hello world");
     // `first_word` works on slices of `String`s, whether partial or whole
@@ -103,3 +104,16 @@ fn calculate_length(s: &String) -> usize { // s is a reference to a String
 fn change_something(some_string: &mut String) {
     some_string.push_str(", world");
 }
+
+// additional notes:
+// Box deallocation principle: If a variable owns a box, when Rust deallocates the variable’s frame, 
+// then Rust deallocates the box’s heap memory.
+// Clone() does not always make an independent replica on heap. For example 
+// let data = Rc::new(vec![1, 2, 3]);
+// let data2 = data.clone();
+// this will end up with 2 stack variables
+
+// reference will change the permission
+// immutable reference will have read permission, but at the same time invalidation Write (if var is mut) and Own from owner
+// mutable reference will have RW. Also, you cannot create a mutbale reference on immutable variable
+// structs, enums, and traits, those features will have specific interactions with ownership
