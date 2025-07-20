@@ -56,7 +56,7 @@ fn main() {
     change_something(&mut s);
     println!("{}", s);
 
-    let s = String::from("hello");
+    let _ = String::from("hello");
 
     // let mut s = String::from("hello world");
     // let word = first_word(&s); immutable reference
@@ -68,14 +68,14 @@ fn main() {
 
     let my_string = String::from("hello world");
     // `first_word` works on slices of `String`s, whether partial or whole
-    let word = first_word(&my_string[0..6]);
-    let word = first_word(&my_string[..]);
+    let _ = first_word(&my_string[0..6]);
+    let _ = first_word(&my_string[..]);
     // `first_word` also works on references to `String`s, which are equivalent to whole slices of `String`s
-    let word = first_word(&my_string);
+    let _ = first_word(&my_string);
     let my_string_literal = "hello world";
     // Because string literals *are* String slices already,
     // this works too, without the slice syntax!
-    let word = first_word(my_string_literal);
+    let _ = first_word(my_string_literal);
 
     println!(" ------ test the reference lifetime------");
     let mut s = String::from("hello world");
@@ -121,3 +121,30 @@ fn change_something(some_string: &mut String) {
 // immutable reference will have read permission, but at the same time invalidation Write (if var is mut) and Own from owner
 // mutable reference will have RW. Also, you cannot create a mutbale reference on immutable variable
 // structs, enums, and traits, those features will have specific interactions with ownership
+
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {    
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn set_width(&mut self, width: u32) {
+        self.width = width;
+    }
+
+    // method that expects self will move the input struct
+    fn max(self, other: Rectangle) -> Rectangle {
+        Rectangle { 
+            width: self.width.max(other.width),
+            height: self.height.max(other.height),
+        }
+    }
+    // this wont work
+    // fn set_to_max(&mut self, other: Rectangle) {
+    //     *self = self.max(other); // cannot move out of `*self` which is behind a mutable reference
+    // }
+}
