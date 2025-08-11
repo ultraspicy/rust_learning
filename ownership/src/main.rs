@@ -122,23 +122,23 @@ fn change_something(some_string: &mut String) {
 // mutable reference will have RW. Also, you cannot create a mutbale reference on immutable variable
 // structs, enums, and traits, those features will have specific interactions with ownership
 
-struct Rectangle {
+struct _Rectangle {
     width: u32,
     height: u32,
 }
 
-impl Rectangle {    
-    fn area(&self) -> u32 {
+impl _Rectangle {    
+    fn _area(&self) -> u32 {
         self.width * self.height
     }
 
-    fn set_width(&mut self, width: u32) {
+    fn _set_width(&mut self, width: u32) {
         self.width = width;
     }
 
     // method that expects self will move the input struct
-    fn max(self, other: Rectangle) -> Rectangle {
-        Rectangle { 
+    fn _max(self, other: _Rectangle) -> _Rectangle {
+        _Rectangle { 
             width: self.width.max(other.width),
             height: self.height.max(other.height),
         }

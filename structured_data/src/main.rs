@@ -61,9 +61,9 @@ fn main() {
     user1.email = String::from("test2");
 
     // Unit-Like Structs Without Any Fields
-    struct AlwaysEqual;
-    impl PartialEq for AlwaysEqual {
-        fn eq(&self, _: &AlwaysEqual) -> bool {
+    struct _AlwaysEqual;
+    impl PartialEq for _AlwaysEqual {
+        fn eq(&self, _: &_AlwaysEqual) -> bool {
             return false;
          }
     }
@@ -74,7 +74,7 @@ fn main() {
         y: i32, 
     }
     
-    fn print_point(p: &Point) {
+    fn _print_point(p: &Point) {
         println!("{}, {}", p.x, p.y);
     }
 
@@ -105,7 +105,7 @@ fn main() {
     // auto-derive: no vs #[derive[Debug]]
 }
 
-fn simple_add (x: i32, y: i32) -> i32 {
+fn _simple_add (x: i32, y: i32) -> i32 {
     x + y
 }
 

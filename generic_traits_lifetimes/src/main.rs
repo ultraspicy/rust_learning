@@ -1,9 +1,13 @@
 use num_traits::Float;
-/// Quiz
-///     1. How to define and impl trait
-///     2. How to use trait as parameters
-///     3. How to use trait bound syntax
-///
+// Quiz
+//     1. How to define and impl trait
+//     2. How to use trait as parameters
+//     3. How to use trait bound syntax
+//
+// use generic T over function, struct and enum, all following the name of the entity. 
+// and multiple generic <T, U>
+// method definition declar T just after `impl`
+// monomorphization to avoid runtime overhead
 
 fn main() {
     let num_list = vec![2, 100, 1, 2, 3];
