@@ -82,6 +82,7 @@ fn main() {
         println!("Got: {}", received);
     }
 
+<<<<<<< HEAD
 //   await doesn't trigger execution - the Future starts executing as soon as you call the async function. What await does is:
 // Check if the Future is ready (completed)
 // If ready: return the result immediately
@@ -138,4 +139,50 @@ fn main() {
         trpl::join(tx_fut, rx_fut).await;
     })
 
+    // mutex and atomic reference counter arc
+    // use mutex so only one thread can access and operate on data
+    // use Arc for multiple ownership in a multi-thread context
+    use std::sync::{Mutex, Arc};
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+    for i in 0..10 {
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn( move ||{
+            let mut mut_ref = counter.lock().unwrap();
+            *mut_ref += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+    println!("Result: {}", *counter.lock().unwrap());
+
+    // concurrency in rust is implemented by std, not the language itself
+    // Send: Safe to transfer ownership between threads
+    // Sync: Safe to share references between threads (multiple threads can access simultaneously)
+    // this is the end for chapter 16
+
+    // chapter 17: futures, async and await
+    // key points:
+    // async will wrap the block/fn as a future. async block is lazy
+    // await will do two things: Starts polling the future, Suspends if the future isn't ready yet
+
+    use trpl::Html;
+    async fn page_title (url: &str) -> Option<String> {
+        let response_text = trpl::get(url).await.text().await;
+        Html::parse(&response_text)
+            .select_first("title")
+            .map(|title_element| title_element.inner_html())
+    }
+
+    let args: Vec<String> = std::env::args().collect();
+    trpl::run(async {
+        let url = &args[1];
+        match page_title(url).await {
+            Some(title) => println!("title {}", title),
+            None => println!("{url} had no title"),
+        }
+    })
 }
