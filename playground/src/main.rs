@@ -1,31 +1,24 @@
-use std::collections::HashMap;
+use std::{thread, time::Duration};
+use std::sync::mpsc;
+use std::sync::{Mutex, Arc};
 
-fn main() {}
+fn main() {
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
 
-struct Solution {}
-
-impl Solution {
-    pub fn generate_tag(caption: String) -> String {
-        let mut iter = caption
-            .split_whitespace()
-            .flat_map( |word| {
-                let mut chars = word.chars();
-                chars
-                    .next()
-                    .map(|first| first.to_uppercase().chain(chars.map(|char| char.to_ascii_lowercase())))
-                    .into_iter()
-                    .flatten()
-            })
-            .take(99);
-
-        iter
-            .next()
-            .map(|char| char.to_lowercase().chain(iter))
-            .into_iter()
-            .flatten()
-            .fold(String::from("#"), |mut acc, ch| {
-                acc.push(ch);
-                acc
-            })
+    for _ in 1..10 {
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn(move || {
+            let mut number = counter.lock().unwrap();
+            *number += 1;
+        });
+        handles.push(handle);
     }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Result {}", *counter.lock().unwrap());
 }
+

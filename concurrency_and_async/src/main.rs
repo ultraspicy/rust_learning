@@ -1,8 +1,21 @@
 use std::{thread, time::Duration, vec};
 use std::sync::mpsc;
 
+/// summary of thread (chapter 16.1)
+/// let handle = thread::spawn(||{}) to create a thread with a handle
+/// hanlde.join() to block the current thread until the spawned thread is finished
+/// use `move` to force the closure to take ownership of `v`
+
+/// summary of channel (chapter 16.2)
+/// let (tx, rx) = mpsc::channel(); to spawn a channel, with transmitter and recevier
+/// much similar with go channel. Multiple Producer Single Consumer
+/// Send() will transfer ownership
+ 
+/// summary of mutex (chapter 16.3)
+/// Send and Sync Traits (chapter 16.4)
 fn main() {
-    // thread::spawn creates sub thread, which ends when main thread ends
+    // let handle = thread::spawn() creates sub thread
+    // all spawned threads are shut down whther or not they have finished running
     thread::spawn(||{
         for i in 0..10 {
             println!(" this is a sub1 thread, counting {}", i);
@@ -15,8 +28,6 @@ fn main() {
         println!(" this is main thread, counting {}", i);
         thread::sleep(Duration::from_millis(300));
     }
-
-    // use join on over a handle so that it will wait for its thread to finish before main exits
     let handle = thread::spawn(||{
         for i in 0..5 {
             println!(" this is a sub2 thread, counting {}", i);
@@ -24,13 +35,9 @@ fn main() {
         }
 
     });
-
-    // careful, this is a blocking statement
     handle.join().unwrap();
-
     println!("finishing the main");
 
-    // closure with move
     let v = vec![1, 2, 3];
     thread::spawn(move || {
         println!("use move for closure, printing v = {:?}", v);
@@ -82,7 +89,6 @@ fn main() {
         println!("Got: {}", received);
     }
 
-<<<<<<< HEAD
 //   await doesn't trigger execution - the Future starts executing as soon as you call the async function. What await does is:
 // Check if the Future is ready (completed)
 // If ready: return the result immediately
@@ -137,7 +143,7 @@ fn main() {
         };
 
         trpl::join(tx_fut, rx_fut).await;
-    })
+    });
 
     // mutex and atomic reference counter arc
     // use mutex so only one thread can access and operate on data
