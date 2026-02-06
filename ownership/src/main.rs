@@ -61,7 +61,7 @@ fn main() {
     // let mut s = String::from("hello world");
     // let word = first_word(&s); immutable reference
     // s.clear() uses a mutable reference
-    // println!("the first word is: {}", word); error occurs, no mutable reference and immutable one at the same time
+    // println!("the first word is: {}", word); error occurs, ❌ Tries to mutate through owner while immutable ref exists
     // Q: what is String and what is &str
     // A: String is a type that will always be allocated on heap
     // while &str stands for string slice, a "fat" pointer with a `len` field
@@ -81,8 +81,8 @@ fn main() {
     let mut s = String::from("hello world");
     let word = first_word(&s);
     println!("the first word is: {}", word);
-    // s.clear() will make word point to a freed mmr. it is ok to 
-    // clear() this mmr, but if `println!("the first word is: {}", word);` 
+    // s.clear() will make word point to a freed mmr. it is ok to
+    // clear() this mmr, but if `println!("the first word is: {}", word);`
     // after s.clear();, it will run into err since s.clear(); is a mutable borrow
     // we cannot have a mutable borrow after immutable borrow
     s.clear(); // clear() needs to mutably borrow `s` to modify it
@@ -110,9 +110,9 @@ fn change_something(some_string: &mut String) {
 }
 
 // additional notes:
-// Box deallocation principle: If a variable owns a box, when Rust deallocates the variable’s frame, 
+// Box deallocation principle: If a variable owns a box, when Rust deallocates the variable’s frame,
 // then Rust deallocates the box’s heap memory.
-// Clone() does not always make an independent replica on heap. For example 
+// Clone() does not always make an independent replica on heap. For example
 // let data = Rc::new(vec![1, 2, 3]);
 // let data2 = data.clone();
 // this will end up with 2 stack variables
@@ -127,7 +127,7 @@ struct _Rectangle {
     height: u32,
 }
 
-impl _Rectangle {    
+impl _Rectangle {
     fn _area(&self) -> u32 {
         self.width * self.height
     }
@@ -138,7 +138,7 @@ impl _Rectangle {
 
     // method that expects self will move the input struct
     fn _max(self, other: _Rectangle) -> _Rectangle {
-        _Rectangle { 
+        _Rectangle {
             width: self.width.max(other.width),
             height: self.height.max(other.height),
         }

@@ -3,7 +3,7 @@ use std::net::IpAddr;
 fn main() {
 
 // Quiz:
-//  1. given variable are immutable by default, what is the difference between a variable and a constant (assigned once vs known val at compiled time)
+//  1. given variable are immutable by default, what is the difference between a variable and a constant (assigned once vs must known val at compiled time)
 //  2. what is shadowing
 //  3. how to do type annotation (`:u32`)
 //  4. what is the difference between a statement and an expression (Expressions do not include ending semicolons!!!)
