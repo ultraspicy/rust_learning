@@ -21,20 +21,29 @@
 fn main() {
     let v1 = vec![1, 2, 3];
     //  make v1_iter mutable: calling the next method on an iterator changes internal state that the iterator uses
+    // also iter() borrows the data
     let mut v1_iter = v1.iter();
 
     assert_eq!(v1_iter.next(), Some(&1));
     assert_eq!(v1_iter.next(), Some(&2));
 
-    // The iter() method produces an iterator over immutable references. 
+    // The iter() method produces an iterator over immutable references.
     // If we want to create an iterator that takes ownership of v1 and returns owned values, we can call into_iter()
     // Similarly, if we want to iterate over mutable references, we can call iter_mut() instead of iter.
-
     let total: i32 = v1_iter.sum(); // sum takes ownership of the iterator
-    println!("Total: {}", total); // Total: 3 cause next() consumes 
+    println!("Total: {}", total); // Total: 3 cause next() consumes
+
+    let mut v1_into_iter = v1.into_iter();
+    println!("into_next: {:?}", v1_into_iter.next().unwrap());
+    let into_total: i32 = v1_into_iter.sum();
+    println!("into_total: {}", into_total);
 
     // calling the iterator adaptor method map
     let v2 = vec![4, 5, 6];
     let mut v2_iter = v2.into_iter().map(|x|x *2);
-    println!("v2 {:?}", v2_iter.next());
+    println!("v2: {:?}", v2_iter.next());
+
+    let mut v2 = vec![4, 5, 6];
+    let mut v2_iter = v2.iter_mut().map(|x| *x * 2);
+    println!("v2: {:?}", v2_iter.next());
 }

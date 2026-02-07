@@ -1,42 +1,68 @@
 fn main() {
-    /// define and init a vector
+    // Vec
+    // define and init a vector
+    // mutate the vector
     let v: Vec<i32> = Vec::new();
     let mut v = vec![1, 2, 3];
-    /// mutate the vector
     v.push(4);
 
-    /// read its value
+    // read its value
+    // if read value directly, it may panic
+    // let does_not_exist = &v[100];
+    // use get will return a reference to the element or subslice
     let third: &i32 = &v[2];
-    /// !!! cause the program to panic
-    /// let does_not_exist = &v[100];
-    /// it returns None without panicking
     let does_not_exist = v.get(100);
-
-    /// iterating over the values in vec
     for i in &v {
         println!("{}", i);
     }
     println!("{:?}", v);
     println!("{}", third);
 
-    /// Rust has only one string type in the core language, which is the string slice `str`
-    /// String type, which is provided by Rust’s standard library rather than coded into the core language
+    // String
+    // Rust has only one string type in the core language, which is the string slice `str`
+    // String type, which is provided by Rust’s standard library rather than coded into the core language
+    // `str` is unsized, String = sized (24 bytes on stack + variable heap data)
+    // So we can `let a :String = ...` but no `let a: str = ...`
     let mut data = "initial contents";
     let mut s = data.to_string();
     s.push_str(" something else");
 
-    /// string concat and format
+    // string concat and format
     let s1 = String::from("Hello, ");
     let s2 = String::from("world!");
-    /// fn add(self, s: &str) -> String {
+    // fn add(self, s: &str) -> String {
+    // first para is self, will take the ownership. Second para is borrow
     let s3 = s1 + &s2; // note s1 has been moved here and can no longer be used
 
     let s1 = String::from("tic");
     let s2 = String::from("tac");
     let s3 = String::from("toe");
     let s = format!("{}-{}-{}", s1, s2, s3);
-    /// two methods for iterating
-    /// s.chars() s.bytes()
+
+    let s_new_empty = String::new(); // create empty string
+    let s_from_literal = String::from("string_literal"); // create string from literal
+    let s_from_literal_2 = "string_literal".to_string(); // create sstring from literal
+
+    let mut s_to_append = String::from("hello");
+    s_to_append.push_str(" world"); // push &str, this method is &mut self
+    s_to_append.push('c'); // also &mut self, but push a single char
+
+    println!("s_to_append len = {}", s_to_append.len()); // size
+    println!("s_to_append is_empty = {}", s_to_append.is_empty()); // empty
+
+    let s_to_trim = String::from("  s_to   trim.   "); // trim heading and trailing whitespaces
+    println!("after trim: {}", s_to_trim.trim());
+
+    let s_to_split_comma = String::from("a,b,c,d,e");
+    let after_split_comma = s_to_split_comma.split(',');
+    for sub in after_split_comma {
+        println!("after split: {}", sub);
+    }
+
+    let s_to_format = format!("format: {} dollars and {} cents", 5, 3);
+    println!("{}", s_to_format);
+    // other methods 
+    // contains(), starts_with(), ends_with(), replace(), to_lowercase(), to_uppercase()
 
 
     /// hashmap
