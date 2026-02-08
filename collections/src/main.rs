@@ -1,3 +1,6 @@
+use core::hash;
+use std::hash::Hash;
+
 fn main() {
     // Vec
     // define and init a vector
@@ -65,7 +68,14 @@ fn main() {
     // contains(), starts_with(), ends_with(), replace(), to_lowercase(), to_uppercase()
 
 
-    /// hashmap
+    // hashmap
+    // get(&key) - Returns Option<&V>, immutable reference to value
+    // get_mut(&key) - Returns Option<&mut V>, mutable reference to value
+    // get_key_value(&key) - Returns Option<(&K, &V)>, both key and value
+
+    // contains_key(&key) - Returns bool, checks if key exists
+    // remove(&key) - Returns Option<V>, removes and returns the value
+    // remove_entry(&key) - Returns Option<(K, V)>, removes and returns both key and value
     use std::collections::HashMap;
     let mut scores = HashMap::new();
     scores.insert(String::from("Blue"), 10);
@@ -73,4 +83,22 @@ fn main() {
     let teams = vec![String::from("Blue"), String::from("Yellow")];
     let initial_scores = vec![10, 50];
     let mut scores: HashMap<_, _> = teams.into_iter().zip(initial_scores.into_iter()).collect();
+
+    // entry() returns an Entry enum, which has two variants:
+    // Occupied(OccupiedEntry) - key exists in the map
+    // Vacant(VacantEntry) - key doesn't exist
+
+    // entry() method
+    // or_insert(default_value): Insert if key doesn't exist, return mutable reference either way
+    // very useful when you need insert default value and immediately manipulate the V
+    let mut hashmap: HashMap<i32, Vec<i32>> = HashMap::new();
+    hashmap.entry(1).or_insert(Vec::new()).push(0);
+
+    // similar or_insert_with(Fn)
+    hashmap.entry(2).or_insert_with(|| {
+        let mut v: Vec<i32> = vec![];
+        v.push(1);
+        v.push(2);
+        v
+    });
 }
