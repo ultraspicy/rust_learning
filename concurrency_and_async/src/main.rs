@@ -10,8 +10,13 @@ use std::sync::mpsc;
 /// let (tx, rx) = mpsc::channel(); to spawn a channel, with transmitter and recevier
 /// much similar with go channel. Multiple Producer Single Consumer
 /// Send() will transfer ownership
+/// rx.recv() behavior:
+///  - Blocks while waiting for a message if ANY tx is still alive
+///  - Returns Ok(value) when a message arrives
+///  - Returns Err(RecvError) when ALL tx are dropped (no more messages possible)
  
 /// summary of mutex (chapter 16.3)
+/// 
 /// Send and Sync Traits (chapter 16.4)
 fn main() {
     // let handle = thread::spawn() creates sub thread
@@ -21,7 +26,6 @@ fn main() {
             println!(" this is a sub1 thread, counting {}", i);
             thread::sleep(Duration::from_millis(300));
         }
-
     });
 
     for i in 0..2 {
@@ -44,14 +48,15 @@ fn main() {
     });
 
     // use channel communicate
-    let (tx, rx) = mpsc::channel();
+    // comment out due to rxx.recv() is blocking the main thread
+    // let (txx, rxx) = mpsc::channel();
 
-    thread::spawn(move || {
-        tx.send("this is a test").unwrap(); // unwrap will return error when the receiver has already been dropped and there’s nowhere to send
-    });
+    // thread::spawn(move || {
+    //     txx.send("this is a test").unwrap(); // unwrap will return error when the receiver has already been dropped and there’s nowhere to send
+    // });
 
-    let received = rx.recv().unwrap();
-    println!("Got: {received}");
+    // let received = rxx.recv().unwrap();
+    // println!("Got: {received}");
 
     let (tx, rx) = mpsc::channel();
     // use clone to create multiple producer
@@ -88,6 +93,37 @@ fn main() {
     for received in rx {
         println!("Got: {}", received);
     }
+
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn( move || {
+            let mut num = counter.lock().unwrap();
+            *num += 1;
+        });
+
+        handles.push(handle);
+    }
+
+    for h in handles {
+        h.join().unwrap()
+    }
+    let a = counter.lock().unwrap();
+    drop(a);
+
+    println!("counter = {}", counter.lock().unwrap());
+
+    // bad example
+    // the code below, s doesn't live long enough
+    // although we can bind arc lifetime with s, that violates the purpose of arc
+    //  arc is meant to share data between thread, so it is better to own the data not ref
+
+    //let s = String::from("Hello world");
+    // let a = Arc::new(&s);
+    // let a2 = Arc::clone(&a);
+
 
 //   await doesn't trigger execution - the Future starts executing as soon as you call the async function. What await does is:
 // Check if the Future is ready (completed)
