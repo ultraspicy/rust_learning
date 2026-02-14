@@ -125,18 +125,19 @@ fn main() {
     // let a2 = Arc::clone(&a);
 
 
-    // await doesn't trigger execution - the Future starts executing as soon as you call the async function. What await does is:
-    // Check if the Future is ready (completed)
-    // If ready: return the result immediately
-    // If not ready: yield control back to the executor and suspend the current task
+    // Calling an async function → Creates the Future 
+    // await triggers polling of the Future
 
-    trpl::run(async { // main task, it spawn anoher task via spawn_task
-        let handle = trpl::spawn_task(async { // spwan hands it to the executor to start running immediately
-            for i in 1..10 {
-                println!(" hi number {} from the first task", i);
-                trpl::sleep(Duration::from_millis(500)).await;
-            }
-        });
+    trpl::run(
+    async { // main task, it spawn anoher task via spawn_task
+                let handle = trpl::spawn_task(
+            async { // spwan hands it to the executor to start running immediately
+                        for i in 1..10 {
+                            println!(" hi number {} from the first task", i);
+                            trpl::sleep(Duration::from_millis(500)).await;
+                        }
+                    }
+                );
         // here there is no more main task, so it COMPLETES immediately
         // unless we await here
        match handle.await { // handle.await creates a dependency relationship, but the executor still treats them as peer tasks
