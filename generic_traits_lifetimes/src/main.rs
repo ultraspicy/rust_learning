@@ -35,7 +35,7 @@ fn main() {
         let string2 = String::from("xyz");
         let s1= &string1;
         let s2= &string2;
-        let result = longest(s1, s2);
+        let _result = longest(s1, s2);
     }
 }
 

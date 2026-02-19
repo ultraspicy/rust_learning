@@ -31,6 +31,13 @@ fn main() {
     //     File::open("hello.txt")?.read_to_string(&mut s)?;
     //     Ok(s)
 
+//     The From conversion part is what makes ? flexible. As long as the error type of what you're ?-ing can be converted into the error type of your function's return type, it works. For example:
+// rustfn foo() -> Result<(), MyError> {
+//     let f = std::fs::File::open("file.txt")?;  // io::Error → MyError via From
+//     Ok(())
+// }
+// As long as you implement From<io::Error> for MyError, the ? handles the conversion automatically.
+
     // unwrap(): panic on None/Error
     // expect(msg): panic on None/Error with msg
     // unwrap_or(val: T): return val on on None/Error 
