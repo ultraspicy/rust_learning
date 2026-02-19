@@ -1,0 +1,17 @@
+[workspace]
+members = [
+    "collections",
+    "concurrency_and_async",
+    "crawler",
+    "err_handling",
+    "functional_features",
+    "generic_traits_lifetimes",
+    "module_system",
+    "ownership",
+    "playground",
+    "rust_basics",
+    "smart_pointer",
+    "structured_data",
+    "test_in_rust",
+]
+resolver = "2"
