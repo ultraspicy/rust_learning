@@ -62,3 +62,9 @@ mod tests {
 // $ cargo test <test_function_name_pattern>
 // $ cargo test -- --ignored
 // $ cargo test -- --include-ignored
+
+// “Ignoring Some Tests"
+// in the “Running a Subset of Tests by Name”
+// benchmark tests
+// “Running a Subset of Tests by Name” 
+// “Documentation Comments as Tests” 
