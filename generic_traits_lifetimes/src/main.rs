@@ -29,6 +29,18 @@ fn main() {
     let p = Point {x: 5.0, y: 5.0};
     println!("x = {}, y = {}", p.x, p.y);
     println!("distance = {}", p.distance());
+
+    let string1 = String::from("long string");
+    {
+        let string2 = String::from("xyz");
+        let s1= &string1;
+        let s2= &string2;
+        let result = longest(s1, s2);
+    }
+}
+
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() { x } else { y }
 }
 
 fn largest<T: std::cmp::PartialOrd>(list :&[T]) -> &T {
@@ -107,3 +119,9 @@ impl<T: Float> Distance<T> for Point<T> {
 //         s2
 //     }
 // }
+// Adding lifetime annotations doesn't solve a lifetime problem — it just makes the relationships explicit
+// enough that Rust can detect the problem elsewhere. 
+// You could think of it like type annotations: writing x: i32 doesn't fix a bug, 
+// it just lets the compiler check for type mismatches. Lifetime annotations do the same thing for reference validity.
+// The frustrating part is that adding annotations can reveal a new error that was always there but invisible. 
+// That feels like the annotations broke something, but really they just made a latent bug visible — which is the whole point.

@@ -124,9 +124,10 @@ fn main() {
     // let a = Arc::new(&s);
     // let a2 = Arc::clone(&a);
 
-
+    // =============================== async rust =========================================
     // Calling an async function → Creates the Future 
     // await triggers polling of the Future
+    // The future captures any lifetimes in the function's arguments. 
 
     trpl::run(
     async { // main task, it spawn anoher task via spawn_task
@@ -181,6 +182,7 @@ fn main() {
 
         trpl::join(tx_fut, rx_fut).await;
     });
+    
 
     // mutex and atomic reference counter arc
     // use mutex so only one thread can access and operate on data
