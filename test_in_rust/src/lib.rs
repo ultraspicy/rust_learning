@@ -63,8 +63,20 @@ mod tests {
 // $ cargo test -- --ignored
 // $ cargo test -- --include-ignored
 
-// “Ignoring Some Tests"
+// “Ignoring Some Tests" cargo test -- --ignored
 // in the “Running a Subset of Tests by Name”
 // benchmark tests
-// “Running a Subset of Tests by Name” 
+// “Running a Subset of Tests by Name”  cargo test <testname> filters by checking if the test name contains the string you provide 
 // “Documentation Comments as Tests” 
+
+// mod common; — loads/declares the module
+
+// Tells Rust "go find this file and compile it as part of this crate"
+// Without this, the file doesn't exist as far as Rust is concerned
+// Only needs to happen once in the whole crate
+
+// use common::setup; — brings into scope
+
+// Just creates a shortcut so you can write setup() instead of common::setup()
+// The module must already be loaded via mod first
+// purely convenience, doesn't load anything new
