@@ -1,24 +1,14 @@
-use std::{thread, time::Duration};
-use std::sync::mpsc;
-use std::sync::{Mutex, Arc};
+use std::io::Error;
+use std::error::Error as stdErr;
 
-fn main() {
-    let counter = Arc::new(Mutex::new(0));
-    let mut handles = vec![];
+struct Trie {
+    val: i32,
+    child: Option<Box<Trie>>,
+}
 
-    for _ in 1..10 {
-        let counter = Arc::clone(&counter);
-        let handle = thread::spawn(move || {
-            let mut number = counter.lock().unwrap();
-            *number += 1;
-        });
-        handles.push(handle);
-    }
-
-    for handle in handles {
-        handle.join().unwrap();
-    }
-
-    println!("Result {}", *counter.lock().unwrap());
+fn main() -> Result<(), Box<dyn stdErr>> {
+    let a: Option<i32> = None;
+    let val = a.ok_or_else(|| std::io::Error::new(std::io::ErrorKind::Other, "was none"))?;
+    Ok(())
 }
 
