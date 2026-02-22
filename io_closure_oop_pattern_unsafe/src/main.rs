@@ -1,4 +1,4 @@
-use std::{env, error::Error, fs};
+use std::env;
 use std::process;
 use io_closure_oop_pattern_unsafe::Config;
 
