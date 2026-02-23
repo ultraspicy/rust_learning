@@ -1,7 +1,7 @@
 use std::env;
 use std::process;
 use io_closure_oop_pattern_unsafe::Config;
-use io_closure_oop_pattern_unsafe::build_ui;
+use io_closure_oop_pattern_unsafe::trait_object::build_ui;
 
 fn main() {
     println!("Hello, world!");
@@ -19,6 +19,6 @@ fn main() {
         process::exit(1);
     };
 
+    // a function from submodule of root crate
     build_ui();
 }
-
