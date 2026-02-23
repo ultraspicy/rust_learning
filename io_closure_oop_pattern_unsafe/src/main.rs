@@ -1,6 +1,7 @@
 use std::env;
 use std::process;
 use io_closure_oop_pattern_unsafe::Config;
+use io_closure_oop_pattern_unsafe::build_ui;
 
 fn main() {
     println!("Hello, world!");
@@ -17,5 +18,7 @@ fn main() {
         println!("Application error: {e}");
         process::exit(1);
     };
+
+    build_ui();
 }
 
