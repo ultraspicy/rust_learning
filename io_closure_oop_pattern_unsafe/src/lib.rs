@@ -1,5 +1,6 @@
 pub mod state_pattern;
 pub mod trait_object;
+pub mod raw_pointer;
 
 pub use trait_object::build_ui;
 
