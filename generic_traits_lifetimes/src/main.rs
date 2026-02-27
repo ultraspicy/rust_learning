@@ -1,4 +1,6 @@
 use num_traits::Float;
+use std::fmt::Display;
+
 // Quiz
 //     1. How to define and impl trait
 //     2. How to use trait as parameters
@@ -90,35 +92,41 @@ impl<T: Float> Distance<T> for Point<T> {
 // any values that don’t adhere to these constraints
 // 2 .returning a reference from a function, the lifetime parameter for the return type
 // needs to match the lifetime parameter for one of the parameters.
-// fn longer<'a> (s1: &'a str, s2: &'a str) -> &'a str {
-//     if s1.len() > s2.len() {
-//         s1
-//     } else {
-//         s2
-//     }
-// }
+fn _longer<'a> (s1: &'a str, s2: &'a str) -> &'a str {
+    if s1.len() > s2.len() {
+        s1
+    } else {
+        s2
+    }
+}
 // lifetime in struct
-// it means an instance of Something can’t outlive the reference it holds in its part field.
-// struct Something<'a> {
-//     part: &'a str,
-// }
+// it means an instance of Something can’t outlive the reference it holds in its `part` field.
+struct _Something<'a> {
+    part: &'a str,
+}
 // // interesting lifetime elision rule, which makes the method much nicer to review and write
-//
+// when a method has &self or &mut self as a parameter, Rust automatically assigns the self lifetime
+//  to all output references. 
+
+// Why not just refer from the impl?
+// Rust wants the contract to be explicit and stable at the boundary rather than implicitly derived from the implementation.
+
 // // the lifetime of all string literals is 'static., living for the entire duration of the program
-//
+// String literals aren't owned by anyone — they're just pointers into the program's read-only memory.
+
 // // put generics, trait bounds and lifetime together
-// fn longer_refined<'a, T> (
-//     s1: &'a str,
-//     s2: &'a str,
-//     announce: T
-// ) -> &'a str where T:Display {
-//     println!("announce {}", announce);
-//     if s1.len() > s2.len() {
-//         s1
-//     } else {
-//         s2
-//     }
-// }
+fn _longer_refined<'a, T> (
+    s1: &'a str,
+    s2: &'a str,
+    announce: T
+) -> &'a str where T:Display {
+    println!("announce {}", announce);
+    if s1.len() > s2.len() {
+        s1
+    } else {
+        s2
+    }
+}
 // Adding lifetime annotations doesn't solve a lifetime problem — it just makes the relationships explicit
 // enough that Rust can detect the problem elsewhere. 
 // You could think of it like type annotations: writing x: i32 doesn't fix a bug, 

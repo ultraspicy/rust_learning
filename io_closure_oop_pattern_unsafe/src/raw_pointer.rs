@@ -1,4 +1,5 @@
-
+// static = Data that lives for the entire program lifetime
+// Single memory location, lives forever
 static mut COUNTER_COUNTER_CHICKEN_FINGER: usize = 0;
 
 // fn — "You can call me from anywhere, I guarantee safety to the outside world"
@@ -42,7 +43,7 @@ pub fn create_and_deref() {
 unsafe fn dangerous(){}
 
 unsafe extern "C" {
-    // At the linker level, C symbols are just names
+    // At the linker level, C symbols are just names 'abc'
     // compiler will trust the author for the existence/validity of function
     fn abs(input: i32) -> usize;
 
