@@ -3,11 +3,11 @@
 //     2. How to use trait as parameters
 //     3. How to use trait bound syntax
 //
-// use generic T over function, struct and enum, all following the name of the entity. 
+// use generic T over function, struct and enum, all following the name of the entity.
 // and multiple generic <T, U>
 // method definition declar T just after `impl`
 // monomorphization to avoid runtime overhead
-use generic_traits_lifetimes::basics;
+use generic_traits_lifetimes::{basics, advanced};
 
 fn main() {
     let num_list = vec![2, 100, 1, 2, 3];
@@ -37,4 +37,7 @@ fn main() {
         let s2= &string2;
         let _result = basics::longest(s1, s2);
     }
+
+    advanced::how_to_dedup_fn_name();
+    advanced::run_frame_print();
 }
