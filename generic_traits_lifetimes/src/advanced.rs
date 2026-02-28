@@ -1,7 +1,6 @@
 use core::fmt;
 use std::ops::Add;
 
-use crate::basics::Point;
 // topic 1: associate type and operator overloading
 // use associated type to bind a trait with a specfic type
 // Implementation can only associate Iterator trait with one type once
