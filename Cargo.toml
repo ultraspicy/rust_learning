@@ -13,6 +13,7 @@ members = [
     "rust_basics",
     "smart_pointer",
     "structured_data",
-    "test_in_rust",
+    "test_in_rust", 
+    "vector_search",
 ]
 resolver = "2"
