@@ -61,5 +61,6 @@ async fn main() -> Result<(), QdrantError> {
         dbg!(first_point);
     }
 
+
     Ok(())
 }
